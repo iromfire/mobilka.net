@@ -36,9 +36,22 @@ export class DeliveryComponent implements OnInit {
         Validators.required,
         Validators.minLength(10),
       ]),
-      adress: new FormControl(null, Validators.required),
+      address: new FormControl(null, Validators.required),
       payment: new FormControl('Наличные'),
     });
+  }
+
+  generateUniqueId() {
+    const date = new Date();
+    const dateNow =
+      date.getDate().toString() +
+      '0' +
+      (date.getMonth() + 1).toString() +
+      date.getFullYear().toString();
+    const randomInt = (min: number, max: number) =>
+      Math.floor(Math.random() * (max - min + 1)) + min;
+    const timeNow = date.getHours().toString() + date.getMinutes().toString();
+    return dateNow + '-' + timeNow + '-' + randomInt(100, 999);
   }
 
   submit(): void {
@@ -48,9 +61,10 @@ export class DeliveryComponent implements OnInit {
     this.submitted = true;
     const sub = this.totalPrice.subscribe((price) => {
       const order = {
+        orderNumber: this.generateUniqueId(),
         name: this.form.value.name,
         phone: this.form.value.phone,
-        adress: this.form.value.adress,
+        address: this.form.value.adress,
         orders: this.productServ.productsState.filter((p) => p.isCart),
         payment: this.form.value.payment,
         price,

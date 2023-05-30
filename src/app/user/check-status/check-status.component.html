@@ -1,3 +1,19 @@
-<div [formGroup]="formGroup">
-<button (click)="check()">CLick</button>
+<div [formGroup]="formGroup" class="wrapper">
+  <h2>Узнайте статус вашего заказа</h2>
+  <div class="input">
+    <input
+      type="text"
+      formControlName="orderNumber"
+      placeholder="Введите номер заказа"
+    />
+  </div>
+  <button (click)="check()" mat-flat-button color="primary">
+    Узнать статус
+  </button>
+  <div *ngIf="checkSubmit">
+    <div *ngIf="status">
+      <h3>Статус вашего заказа: {{ status }}</h3>
+    </div>
+    <div *ngIf="errorExist && !status">{{ showNotification() }}</div>
+  </div>
 </div>

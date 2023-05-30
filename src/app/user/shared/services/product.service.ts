@@ -27,6 +27,7 @@ export class ProductService {
     false
   );
   public isLoaded: Observable<boolean> = this._isLoaded.asObservable();
+  cartItems: any[] = [];
 
   constructor(private http: HttpClient) {}
 
@@ -110,8 +111,9 @@ export class ProductService {
   }
 
   addToCart(product: Product): void {
+    this.cartItems.push(product);
+    localStorage.setItem('cartItems', JSON.stringify(this.cartItems));
     product.isCart = true;
-    console.log(product);
     product.count!++;
     const i = this._products.value.findIndex((p) => p.id === product.id);
     if (i > -1) {

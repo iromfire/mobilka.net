@@ -27,10 +27,11 @@ export interface Product {
 
 export interface Order {
   id?: string;
+  orderNumber: string;
   orders?: Array<Product>;
   name: string;
   phone: string;
-  adress: string;
+  address: string;
   payment: string;
   price: number;
   date: string | Date;

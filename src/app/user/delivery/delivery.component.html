@@ -1,4 +1,4 @@
-<form [formGroup]="form" (ngSubmit)="submit()">
+<form [formGroup]="form" (ngSubmit)="submit()" *ngIf="totalPrice | async">
   <h2>Доставка</h2>
 
   <div class="form-control" [formGroup]="form">
@@ -32,12 +32,12 @@
 
   <div class="form-control" [formGroup]="form">
     <label for="adress">Адрес</label>
-    <input id="adress" type="text" formControlName="adress" />
+    <input id="adress" type="text" formControlName="address" />
     <div
-      *ngIf="form.get('adress')!.touched && form.get('adress')!.invalid"
+      *ngIf="form.get('address')!.touched && form.get('address')!.invalid"
       class="validation"
     >
-      <small *ngIf="form.get('adress')!.errors!.required"
+      <small *ngIf="form.get('address')!.errors!.required"
         >Введите ваш адрес</small
       >
     </div>
@@ -54,7 +54,8 @@
   <button
     mat-flat-button
     type="submit"
-    class="btn btn-primary btn-block"
+    class="btn-block"
+    color="primary"
     [disabled]="form!.invalid || submitted"
     (submit)="submit()"
   >

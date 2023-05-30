@@ -56,7 +56,12 @@
     </div>
     <div class="total">
       <b>Итого: {{ totalPrice | async | currency }}</b>
-      <button mat-flat-button color="primary" [routerLink]="['/delivery']">
+      <button
+        mat-flat-button
+        color="primary"
+        [routerLink]="['/delivery']"
+        (click)="submit()"
+      >
         Оформить
       </button>
     </div>

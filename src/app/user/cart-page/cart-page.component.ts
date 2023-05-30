@@ -15,6 +15,7 @@ export class CartPageComponent implements OnInit {
     map((products) => products.filter((p) => p.isCart))
   );
   totalPrice: Observable<number> = this.productServ.totalPrice;
+  storedCartItems!: any | Product[];
 
   readonly MAX_COUNT = 10;
   readonly MIN_COUNT = 1;
@@ -23,7 +24,7 @@ export class CartPageComponent implements OnInit {
     private productServ: ProductService,
     private notifierService: NotifierService
   ) {
-    this.productServ.totalPrice = this.cartProducts.pipe(
+    this.totalPrice = this.cartProducts.pipe(
       map((cart) =>
         cart.reduce(
           (total, product) => total + +product.price * product.count!,
@@ -32,16 +33,20 @@ export class CartPageComponent implements OnInit {
       )
     );
   }
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.storedCartItems = localStorage.getItem('cartItems');
+    if (this.storedCartItems) {
+      this.productServ.cartItems = JSON.parse(this.storedCartItems);
+    }
+  }
+
+  submit() {
+    this.productServ.totalPrice = this.totalPrice;
+  }
 
   deleteFromCart(product: Product): void {
     this.productServ.deleteFromCart(product);
     product.count = 0;
-  }
-
-  deleteAllFromCart(): void {
-    /* this.productServ.products.map((p: Product) => (p.isCart = false));*/
-    /*    this.productServ.products.pipe(map((p) => (p.isCart = false)));*/
   }
 
   incrementProduct(product: Product): void {

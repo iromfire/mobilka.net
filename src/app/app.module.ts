@@ -28,6 +28,8 @@ import localeRu from '@angular/common/locales/ru';
 import { registerLocaleData } from '@angular/common';
 import { CheckStatusComponent } from './user/check-status/check-status.component';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
+import { FIREBASE_OPTIONS } from '@angular/fire/compat';
+import { firebaseConfig } from '../environments/environment';
 
 registerLocaleData(localeRu, 'ru');
 
@@ -72,6 +74,7 @@ registerLocaleData(localeRu, 'ru');
     },
     { provide: LOCALE_ID, useValue: 'ru' },
     [provideNgxMask()],
+    { provide: FIREBASE_OPTIONS, useValue: firebaseConfig },
   ],
   bootstrap: [AppComponent],
 })

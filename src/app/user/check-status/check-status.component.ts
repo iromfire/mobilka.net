@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { AngularFireDatabase } from '@angular/fire/compat/database';
+import { NotifierService } from '../shared/services/notifier.service';
 
 @Component({
   selector: 'app-check-status',
@@ -12,8 +14,12 @@ export class CheckStatusComponent implements OnInit {
   errorExist = false;
   id: string = '';
   status!: any;
+  checkShown = false;
 
-  constructor() {
+  constructor(
+    private db: AngularFireDatabase,
+    private notifierService: NotifierService
+  ) {
     this.formGroup = new FormGroup({
       orderNumber: new FormControl(''),
     });
@@ -21,21 +27,33 @@ export class CheckStatusComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  showNotification(): void {
+    if (!this.checkShown && this.errorExist) {
+      this.notifierService.showNotification(
+        'К сожалению ваш заказ не найден',
+        'OK'
+      );
+    }
+    this.checkShown = true;
+  }
+
   check(): void {
-    // this.checkSubmit = true;
-    // // const phone = this.formGroup.get('phone')!.value;
-    // const phone = '9195065422';
-    // this.db
-    //   .list('orders', (ref: any) => ref.orderByChild('phone').equalTo(phone))
-    //   .valueChanges()
-    //   .subscribe((orders: any[]) => {
-    //     if (orders.length > 0) {
-    //       const orderId = Object.keys(orders[0])[6];
-    //       this.status = orders[0][orderId];
-    //       console.log(this.status);
-    //     } else {
-    //       this.errorExist = true;
-    //     }
-    //   });
+    this.checkSubmit = true;
+    this.checkShown = false;
+    const orderNumber = this.formGroup.get('orderNumber')!.value;
+    this.db
+      .list('orders', (ref: any) =>
+        ref.orderByChild('orderNumber').equalTo(orderNumber)
+      )
+      .valueChanges()
+      .subscribe((orders: any[]) => {
+        if (orders.length > 0) {
+          const orderId = Object.keys(orders[0])[7];
+          this.status = orders[0][orderId];
+          this.errorExist = false;
+        } else {
+          this.errorExist = true;
+        }
+      });
   }
 }
