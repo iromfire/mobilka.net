@@ -1,0 +1,22 @@
+<div class="padding">
+
+  <div class="search-center" *ngIf="isLoaded | async">
+    <mat-form-field class="mat">
+      <input matInput type="text" placeholder="Поиск товара..." [(ngModel)]="productName">
+    </mat-form-field>
+  </div>
+
+  <ng-template [ngIf]="isLoaded | async"; [ngIfElse]="loading">
+    <div class="dashboard">
+      <app-product *ngFor="let product of (products | async)! | search: productName" [product]="product" class="box">
+      </app-product>
+    </div>
+  </ng-template>
+
+</div>
+
+<ng-template #loading>
+  <div class="mat-spinner">
+    <mat-spinner class="search-center" diameter="50"></mat-spinner>
+  </div>
+</ng-template>

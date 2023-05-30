@@ -1,0 +1,29 @@
+h2{
+  margin-bottom: 1rem;
+}
+
+p{
+  margin-bottom: 1rem;
+}
+
+button{
+  margin-bottom: 1rem;
+}
+
+.padding{
+  padding-bottom: 4rem;
+}
+
+.dashboard{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.box{
+  width:31.78%;
+  padding: 2rem;
+  margin: .5rem;
+  outline: 1px solid #ccc;
+  border-radius: 8px;
+}
+

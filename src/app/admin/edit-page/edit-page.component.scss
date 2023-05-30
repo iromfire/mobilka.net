@@ -1,0 +1,15 @@
+button{
+  margin-right: .5rem;
+}
+
+.image-box{
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  width: 300px;
+  height: 400px;
+  margin-right: 3rem;
+  img{
+    object-fit: contain;
+  }
+}

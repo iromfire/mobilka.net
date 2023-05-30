@@ -1,0 +1,97 @@
+* {
+  font-family: "SF UI Display", sans-serif;
+}
+
+h2 {
+  margin-bottom: 1rem;
+}
+
+p {
+  margin-bottom: 1rem;
+}
+
+.cart-main {
+  display: flex;
+  flex-direction: row;
+  gap: 25px;
+}
+
+.cart-container {
+  button {
+    margin-right: 0.5rem;
+  }
+}
+
+.total {
+  position: fixed;
+  right: 15rem;
+  width: auto;
+  outline: 1px dotted;
+  border-radius: 8px;
+  outline-offset: 2px;
+  padding: 1rem;
+  float: right;
+  button {
+    margin-left: 0.75rem;
+  }
+}
+
+.padding {
+  padding-bottom: 4rem;
+}
+
+.btn-margin {
+  margin-bottom: 1rem;
+}
+
+.price {
+  margin-bottom: 0.5rem;
+}
+
+.info-cont {
+  padding-top: 1rem;
+  button:last-child {
+    margin-bottom: 0;
+  }
+  h4 {
+    margin-bottom: 0.5rem;
+  }
+  h4:last-of-type {
+    margin-bottom: 0;
+  }
+}
+
+.image-box {
+  display: flex;
+  width: 250px;
+  margin-right: 1rem;
+  padding: 1rem;
+  img {
+    object-fit: contain;
+  }
+}
+
+.img_size {
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.cart-product-container {
+  display: flex;
+  outline-offset: 2px;
+  outline: 1px solid #ccc;
+  border-radius: 8px;
+  width: 730px;
+  height: 250px;
+  margin-bottom: 1rem;
+}
+
+.icon-center {
+  padding-top: 0.5rem;
+  margin: 0 auto;
+}
+
+.delete {
+  margin-top: 1rem;
+  background: red;
+}

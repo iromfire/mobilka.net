@@ -1,0 +1,32 @@
+.dashboard{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.box{
+  width:31.78%;
+  padding: 2rem;
+  margin: .5rem;
+  outline: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.search-center{
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  align-items: center;
+}
+
+.search{
+  width: 100%;
+}
+
+.mat{
+  width: 100%;
+  text-align: center;
+}
+
+.mat-spinner{
+  margin-top: 5rem;
+}

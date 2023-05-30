@@ -1,0 +1,72 @@
+<div *ngIf="(cartProducts | async)!.length > 0; else empty" class="padding">
+  <h2>Ваша корзина</h2>
+  <div class="cart-main">
+    <div class="cart-container">
+      <div
+        *ngFor="let cartProduct of (cartProducts | async)!; let i = index"
+        class="cart-product-container"
+      >
+        <div class="image-box">
+          <img
+            [src]="cartProduct.photo"
+            alt="phone image"
+            [routerLink]="['/product', cartProduct.id]"
+            class="cursor-pointer"
+          />
+        </div>
+
+        <div class="info-cont">
+          <h3>{{ cartProduct.title }}</h3>
+          <span>{{ cartProduct.info }}</span>
+          <div class="price">Цена: {{ cartProduct.price | currency }}</div>
+          <span>Количество: {{ cartProduct.count }}</span>
+          <br />
+          <div>
+            <button
+              mat-flat-button
+              color="primary"
+              (click)="incrementProduct(cartProduct)"
+            >
+              <div class="icon-center">
+                <mat-icon>+</mat-icon>
+              </div>
+            </button>
+            <button
+              mat-flat-button
+              color="primary"
+              (click)="decrementProduct(cartProduct)"
+            >
+              <div class="icon-center">
+                <mat-icon>–</mat-icon>
+              </div>
+            </button>
+          </div>
+          <div>
+            <button
+              class="delete"
+              mat-flat-button
+              color="warn"
+              (click)="deleteFromCart(cartProduct)"
+            >
+              Удалить
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="total">
+      <b>Итого: {{ totalPrice | async | currency }}</b>
+      <button mat-flat-button color="primary" [routerLink]="['/delivery']">
+        Оформить
+      </button>
+    </div>
+  </div>
+</div>
+
+<ng-template #empty>
+  <h2>В корзине пока ничего нет</h2>
+  <p>Начните с главной страницы, чтобы найти что-то конкретное</p>
+  <button mat-flat-button color="primary" [routerLink]="['/']">
+    Перейти на главную
+  </button>
+</ng-template>

@@ -1,0 +1,42 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <h2>Войти как администратор</h2>
+
+  <div class="form-control">
+    <label for="email">Email</label>
+    <input id="email" type="email" formControlName="email" />
+    <div
+      *ngIf="form.get('email')!.touched && form.get('email')!.invalid"
+      class="validation"
+    >
+      <small *ngIf="form.get('email')!.errors!.required">Введите Email</small>
+      <small *ngIf="form.get('email')!.errors!.email"
+        >Введите правильный Email</small
+      >
+    </div>
+  </div>
+
+  <div class="form-control">
+    <label for="password">Пароль</label>
+    <input id="password" type="password" formControlName="password" />
+    <div
+      *ngIf="form.get('password')!.touched && form.get('password')!.invalid"
+      class="validation"
+    >
+      <small *ngIf="form.get('password')!.errors?.required"
+        >Введите пароль</small
+      >
+    </div>
+  </div>
+
+  <button
+    mat-flat-button
+    type="submit"
+    class="btn-block"
+    color="primary"
+    [disabled]="form!.invalid || submitted"
+  >
+    Вход
+  </button>
+
+  <small *ngIf="errorExist" class="flex-center">{{ showNotification() }}</small>
+</form>

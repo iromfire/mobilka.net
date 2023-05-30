@@ -1,0 +1,55 @@
+<div *ngIf="orders.length; else noOrders" class="order">
+  <h2>Таблица заказов</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Дата заказа</th>
+        <th>Товары</th>
+        <th>Адрес доставки</th>
+        <th>Телефон</th>
+        <th>Имя</th>
+        <th>Итого</th>
+        <th>Оплата</th>
+        <th>Статус</th>
+        <th>Удалить</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let order of orders">
+        <td>{{ order.date | date : "dd MMM yyyy HH:mm" }}</td>
+        <td>
+          <div *ngFor="let product of order.orders" class="order-products">
+            {{ product.title }} ({{ product.count }}шт.)
+          </div>
+        </td>
+        <td>{{ order.adress }}</td>
+        <td>+7 {{ order.phone | mask : "(000) 000-00-00" }}</td>
+        <td>{{ order.name }}</td>
+        <td>
+          {{ order.price | currency }}
+        </td>
+        <td>
+          {{ order.payment }}
+        </td>
+        <td>
+          <select #statuses (change)="onSelected(statuses.value, order.id)">
+            <option value="" disabled selected>{{ order.status }}</option>
+            <option *ngFor="let status of orderStatuses" [ngValue]="status">
+              {{ status }}
+            </option>
+          </select>
+        </td>
+        <td>
+          <button mat-flat-button color="warn" (click)="remove(order.id)">
+            Удалить
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<ng-template #noOrders>
+  <h2>Нет заказов</h2>
+</ng-template>

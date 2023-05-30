@@ -1,0 +1,33 @@
+<nav class="navbar bg-dark">
+  <h2>
+    <a [routerLink]="['/']">AMBER</a>
+  </h2>
+
+  <ul *ngIf="isAuth; else login">
+    <li routerLinkActive="active">
+        <a [routerLink]="['/admin', 'dashboard']">Меню</a>
+    </li>
+    <li routerLinkActive="active">
+      <a [routerLink]="['/admin', 'add']">Добавить</a>
+    </li>
+    <li routerLinkActive="active">
+      <a [routerLink]="['/admin', 'orders']">Заказы</a>
+    </li>
+    <li routerLinkActive="active">
+      <a [routerLink]="['/admin', 'login']" (click)="logout()">Выход</a>
+    </li>
+  </ul>
+
+  <ng-template #login>
+    <ul>
+      <li routerLinkActive="active">
+        <a [routerLink]="['/admin', 'login']">Вход</a>
+      </li>
+    </ul>
+  </ng-template>
+</nav>
+
+<div class="container">
+  <router-outlet></router-outlet>
+</div>
+

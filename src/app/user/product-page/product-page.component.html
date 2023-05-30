@@ -1,0 +1,27 @@
+<div *ngIf="product$ | async as product; else loading">
+  <div class="product">
+    <div class="flex">
+      <div class="image-box">
+        <img [src]="product.photo" class="img_size" alt="phone photo" />
+      </div>
+      <div class="item">
+        <h2>
+          <b>{{ product.title }}</b>
+        </h2>
+        <h3>Информация:</h3>
+        <p>{{ product.info }}</p>
+        <h3>Цена:</h3>
+        <span>{{ product.price | currency }}</span>
+        <div>
+          <button mat-flat-button color="primary" (click)="addToCart(product)">
+            В корзину
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #loading>
+  <mat-progress-spinner></mat-progress-spinner>
+</ng-template>

@@ -1,0 +1,79 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <h2>Добавить продукт</h2>
+
+  <div class="form-control" [formGroup]="form">
+    <label for="title">Название</label>
+    <input id="title" type="text" formControlName="title" />
+    <div
+      *ngIf="form.get('title')!.touched && form.get('title')?.invalid"
+      class="validation"
+    >
+      <small *ngIf="form.get('title')!.errors?.required"
+        >Введите название продукта</small
+      >
+    </div>
+  </div>
+
+  <div class="form-control" [formGroup]="form">
+    <label>Фото</label>
+    <label class="image-upload-container btn btn-bwm">
+      <input
+        #imageInput
+        style="display: none"
+        type="file"
+        accept="image/*"
+        (change)="processFile(imageInput)"
+      />
+      <button
+        mat-flat-button
+        type="button"
+        color="primary"
+        (click)="imageInput.click()"
+      >
+        Выбрать фото
+      </button>
+    </label>
+    <div class="image-box" *ngIf="photo">
+      <img [src]="photo" alt="" />
+    </div>
+  </div>
+
+  <div class="form-control" [formGroup]="form">
+    <label for="info">Информация</label>
+    <input id="info" type="text" formControlName="info" />
+    <div
+      *ngIf="form.get('info')!.touched && form.get('info')?.invalid"
+      class="validation"
+    >
+      <small *ngIf="form.get('info')!.errors!.required"
+        >Введите информацию о продукте</small
+      >
+    </div>
+  </div>
+
+  <div class="form-control" [formGroup]="form">
+    <label for="price">Цена</label>
+    <input id="price" type="number" formControlName="price" />
+    <div
+      *ngIf="form.get('price')!.touched && form.get('price')?.invalid"
+      class="validation"
+    >
+      <small *ngIf="form.get('price')!.errors!.required"
+        >Введите цену товара</small
+      >
+    </div>
+  </div>
+
+  <button
+    mat-flat-button
+    color="primary"
+    type="submit"
+    [disabled]="form!.invalid || submitted || !photoLoaded"
+    (submit)="submit()"
+  >
+    Добавить
+  </button>
+  <button mat-flat-button color="primary" type="button" [routerLink]="['/']">
+    Посмотреть продукты
+  </button>
+</form>

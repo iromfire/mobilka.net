@@ -1,0 +1,24 @@
+<div *ngIf="order">
+  <h1>Заказ оформлен</h1>
+  <div class="order-info">
+    <div class="column-1">
+      <p>Дата заказа:</p>
+      <p>Имя получателя:</p>
+      <p>Номер телефона:</p>
+      <p>Адрес доставки:</p>
+      <p>Способ оплаты:</p>
+      <br>
+      <p><b>Итого: {{order.price}}</b></p>
+    </div>
+    <div class="column-2">
+      <p>{{order.date | date}}</p>
+      <p>{{order.name}}</p>
+      <p>+7 {{order.phone | mask:'(000) 000-00-00'}}</p>
+      <p>{{order.adress}}</p>
+      <p>{{order.payment}}</p>
+      <br>
+      <br>
+    </div>
+  </div>
+</div>
+

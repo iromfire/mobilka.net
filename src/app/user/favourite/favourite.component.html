@@ -1,0 +1,19 @@
+<div *ngIf="(favouriteProducts | async)!.length > 0; else empty">
+  <h2>Избранное</h2>
+  <!-- <button mat-flat-button class="btn btn-dark" (click)="deleteAllFromFavourite()" >Очистить избранное</button>-->
+  <div class="dashboard padding">
+    <app-product
+      *ngFor="let product of (favouriteProducts | async)!"
+      [product]="product"
+      class="box"
+    ></app-product>
+  </div>
+</div>
+
+<ng-template #empty>
+  <h2>В избранном пока ничего нет</h2>
+  <p>Начните с главной страницы, чтобы найти что-то конкретное</p>
+  <button mat-flat-button color="primary" [routerLink]="['/']">
+    Перейти на главную
+  </button>
+</ng-template>

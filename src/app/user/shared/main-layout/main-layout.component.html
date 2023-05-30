@@ -1,0 +1,18 @@
+<nav class="navbar bg-dark cursor-pointer">
+  <h2 routerLink="/">AMBER</h2>
+  <ul>
+    <li routerLinkActive="active">
+      <a [routerLink]="['/favourite']">Избранное</a>
+    </li>
+    <li routerLinkActive="active">
+      <a [routerLink]="['/cart']">Корзина</a>
+    </li>
+    <li routerLinkActive="active">
+      <a [routerLink]="['/status']">Статус заказа</a>
+    </li>
+  </ul>
+</nav>
+<div class="container">
+  <router-outlet></router-outlet>
+</div>
+

@@ -1,0 +1,86 @@
+<form [formGroup]="formGroup" (ngSubmit)="submit()">
+  <h2>Изменить продукты</h2>
+
+  <div class="form-control" [formGroup]="formGroup">
+    <label for="title">Название</label>
+    <input id="title" formControlName="title" />
+    <div
+      *ngIf="formGroup.get('title')?.touched && formGroup.get('title')?.invalid"
+      class="validation"
+    >
+      <small *ngIf="formGroup.get('title')?.errors?.required"
+        >Введите название продукта</small
+      >
+    </div>
+  </div>
+
+  <div class="form-control" [formGroup]="formGroup">
+    <label>Фото</label>
+    <label class="image-upload-container btn btn-bwm">
+      <input
+        #imageInput
+        style="display: none"
+        type="file"
+        accept="image/*"
+        (change)="processFile(imageInput)"
+      />
+      <button
+        mat-flat-button
+        type="button"
+        color="primary"
+        (click)="imageInput.click()"
+      >
+        Выбрать фото
+      </button>
+    </label>
+    <div class="image-box" *ngIf="photoUploaded">
+      <img [src]="photo" class="photo_size" alt="" />
+    </div>
+    <div class="image-box" *ngIf="!photoUploaded">
+      <img [src]="product.photo" class="photo_size" alt="" />
+    </div>
+  </div>
+
+  <div class="form-control" [formGroup]="formGroup">
+    <label for="info">Информация</label>
+    <input id="info" formControlName="info" />
+    <div
+      *ngIf="formGroup.get('info')?.touched && formGroup.get('info')?.invalid"
+      class="validation"
+    >
+      <small *ngIf="formGroup.get('info')?.errors?.required"
+        >Введите информацию о продукте</small
+      >
+    </div>
+  </div>
+
+  <div class="form-control" [formGroup]="formGroup">
+    <label for="price">Цена</label>
+    <input id="price" type="number" formControlName="price" />
+    <div
+      *ngIf="formGroup.get('price')?.touched && formGroup.get('price')?.invalid"
+      class="validation"
+    >
+      <small *ngIf="formGroup.get('price')?.errors?.required"
+        >Введите цену товара</small
+      >
+    </div>
+  </div>
+
+  <button
+    mat-flat-button
+    color="primary"
+    type="submit"
+    (submit)="submit()"
+    [disabled]="formGroup!.invalid || submitted"
+  >
+    Сохранить изменения
+  </button>
+  <button
+    mat-flat-button
+    color="primary"
+    [routerLink]="['/admin', 'dashboard']"
+  >
+    Назад в меню
+  </button>
+</form>

@@ -1,0 +1,46 @@
+<div *ngIf="(products | async)?.length; else loading">
+  <h2>Меню</h2>
+
+  <div>
+    <input type="text" placeholder="Найти..." [(ngModel)]="productName" />
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID товара</th>
+        <th>Название</th>
+        <th>Цена</th>
+        <th>Дата добавления</th>
+        <th>Открыть</th>
+        <th>Удалить</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of (products | async)! | search : productName">
+        <td>{{ product.id }}</td>
+        <td>{{ product.title }}</td>
+        <td>{{ product.price | currency }}</td>
+        <td>{{ product.date | date : "dd MMM yyyy HH:mm" }}</td>
+        <td>
+          <button
+            mat-flat-button
+            color="primary"
+            [routerLink]="['/admin', 'product', product.id, 'edit']"
+          >
+            Открыть
+          </button>
+        </td>
+        <td>
+          <button mat-flat-button color="warn" (click)="remove(product.id)">
+            Удалить
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<ng-template #loading>
+  <mat-progress-spinner></mat-progress-spinner>
+</ng-template>
