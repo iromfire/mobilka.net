@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MainLayoutComponent } from './user/shared/main-layout/main-layout.component';
+import { MainLayoutComponent } from './shared/main-layout/main-layout.component';
 import { MainPageComponent } from './user/main-page/main-page.component';
 import { ProductPageComponent } from './user/product-page/product-page.component';
 import { CartPageComponent } from './user/cart-page/cart-page.component';

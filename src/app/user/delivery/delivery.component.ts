@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ProductService } from '../shared/services/product.service';
-import { OrderService } from '../shared/services/order.service';
-import { NotifierService } from '../shared/services/notifier.service';
-import { Product } from '../shared/interfaces/interfaces';
+import { ProductService } from '../../shared/services/product.service';
+import { OrderService } from '../../shared/services/order.service';
+import { NotifierService } from '../../shared/services/notifier.service';
+import { Product } from '../../shared/interfaces/interfaces';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { OrderStatus } from '../shared/enums/enums';
+import { OrderStatus } from '../../shared/enums/enums';
 
 @Component({
   selector: 'app-delivery',
@@ -17,17 +17,17 @@ import { OrderStatus } from '../shared/enums/enums';
 export class DeliveryComponent implements OnInit {
   form!: FormGroup;
   submitted = false;
-  totalPrice: Observable<number> = this.productServ.totalPrice;
-  cartProducts: Observable<Product[]> = this.productServ.products.pipe(
-    map((products) => products.filter((p) => p.isCart))
-  );
+  totalPrice: number = this.productServ.totalPrice;
+  cartItems: Product[];
 
   constructor(
     private productServ: ProductService,
     private orderServ: OrderService,
     private notifierService: NotifierService,
     private router: Router
-  ) {}
+  ) {
+    this.cartItems = this.productServ.getCartItems();
+  }
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -58,22 +58,20 @@ export class DeliveryComponent implements OnInit {
       return;
     }
     this.submitted = true;
-    const sub = this.totalPrice.subscribe((price) => {
-      const order = {
-        orderNumber: this.generateUniqueId(),
-        name: this.form.value.name,
-        phone: this.form.value.phone,
-        address: this.form.value.address,
-        orders: this.productServ.productsState.filter((p) => p.isCart),
-        payment: this.form.value.payment,
-        price,
-        date: new Date(),
-        status: OrderStatus.inProcessing,
-      };
-      this.orderServ.create(order).subscribe(() => {
-        this.router.navigateByUrl('/delivery/order', { state: order }).then();
-      });
-      sub.unsubscribe();
+    const order = {
+      orderNumber: this.generateUniqueId(),
+      name: this.form.value.name,
+      phone: this.form.value.phone,
+      address: this.form.value.address,
+      products: this.cartItems,
+      payment: this.form.value.payment,
+      price: this.productServ.totalPrice,
+      date: new Date(),
+      status: OrderStatus.inProcessing,
+    };
+    this.orderServ.create(order).subscribe(() => {
+      this.router.navigateByUrl('/delivery/order', { state: order }).then();
+      this.productServ.clearCart();
     });
   }
 }

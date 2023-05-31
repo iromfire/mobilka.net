@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Product } from '../../user/shared/interfaces/interfaces';
-import { ProductService } from '../../user/shared/services/product.service';
+import { Product } from '../../shared/interfaces/interfaces';
+import { ProductService } from '../../shared/services/product.service';
 import { switchMap } from 'rxjs/operators';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { NotifierService } from '../../user/shared/services/notifier.service';
+import { NotifierService } from '../../shared/services/notifier.service';
 
 @Component({
   selector: 'app-edit-page',

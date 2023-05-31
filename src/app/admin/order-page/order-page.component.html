@@ -21,7 +21,7 @@
         <td>{{ order.orderNumber }}</td>
         <td>{{ order.date | date : "dd MMM yyyy HH:mm" }}</td>
         <td>
-          <div *ngFor="let product of order.orders" class="order-products">
+          <div *ngFor="let product of order.products" class="order-products">
             {{ product.title }} ({{ product.count }}шт.)
           </div>
         </td>

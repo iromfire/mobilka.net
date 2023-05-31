@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductService } from '../shared/services/product.service';
-import { Product } from '../shared/interfaces/interfaces';
+import { ProductService } from '../../shared/services/product.service';
+import { Product } from '../../shared/interfaces/interfaces';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { NotifierService } from '../shared/services/notifier.service';
+import { NotifierService } from '../../shared/services/notifier.service';
 
 @Component({
   selector: 'app-cart-page',
@@ -11,11 +11,8 @@ import { NotifierService } from '../shared/services/notifier.service';
   styleUrls: ['./cart-page.component.scss'],
 })
 export class CartPageComponent implements OnInit {
-  cartProducts: Observable<Product[]> = this.productServ.products.pipe(
-    map((products) => products.filter((p) => p.isCart))
-  );
-  totalPrice: Observable<number> = this.productServ.totalPrice;
-  storedCartItems!: any | Product[];
+  cartItems: Product[] = [];
+  totalPrice!: number;
 
   readonly MAX_COUNT = 10;
   readonly MIN_COUNT = 1;
@@ -24,21 +21,20 @@ export class CartPageComponent implements OnInit {
     private productServ: ProductService,
     private notifierService: NotifierService
   ) {
-    this.totalPrice = this.cartProducts.pipe(
-      map((cart) =>
-        cart.reduce(
-          (total, product) => total + +product.price * product.count!,
-          0
-        )
-      )
-    );
+    this.cartItems = this.productServ.getCartItems();
+    this.getTotal();
   }
-  ngOnInit(): void {
-    this.storedCartItems = localStorage.getItem('cartItems');
-    if (this.storedCartItems) {
-      this.productServ.cartItems = JSON.parse(this.storedCartItems);
+
+  getTotal() {
+    let total = 0;
+    for (let product of this.cartItems) {
+      // @ts-ignore
+      total += product.count! * product.price!;
     }
+    this.totalPrice = total;
   }
+
+  ngOnInit(): void {}
 
   submit() {
     this.productServ.totalPrice = this.totalPrice;
@@ -47,6 +43,11 @@ export class CartPageComponent implements OnInit {
   deleteFromCart(product: Product): void {
     this.productServ.deleteFromCart(product);
     product.count = 0;
+  }
+
+  clearCart() {
+    this.productServ.clearCart();
+    this.cartItems = this.productServ.cartItems;
   }
 
   incrementProduct(product: Product): void {
@@ -58,6 +59,7 @@ export class CartPageComponent implements OnInit {
       return;
     }
     this.productServ.incrementProduct(product);
+    this.getTotal();
   }
 
   decrementProduct(product: Product): void {
@@ -69,5 +71,6 @@ export class CartPageComponent implements OnInit {
       return;
     }
     this.productServ.decrementProduct(product);
+    this.getTotal();
   }
 }

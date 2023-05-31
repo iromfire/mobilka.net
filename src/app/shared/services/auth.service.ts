@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../../environments/environment';
+import { environment } from '../../../environments/environment';
 import { tap } from 'rxjs/operators';
 import {
   ActivatedRouteSnapshot,
@@ -43,7 +43,8 @@ export class AuthService {
       localStorage.setItem('fb-token-exp', expData.toString());
       localStorage.setItem('fb-token', response.idToken);
     } else {
-      localStorage.clear();
+      localStorage.removeItem('fb-token-exp');
+      localStorage.removeItem('fb-token');
     }
   }
 

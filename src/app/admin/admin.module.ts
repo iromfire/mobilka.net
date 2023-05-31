@@ -7,10 +7,10 @@ import { DashboardPageComponent } from './dashboard-page/dashboard-page.componen
 import { EditPageComponent } from './edit-page/edit-page.component';
 import { OrderPageComponent } from './order-page/order-page.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AuthService } from '../user/shared/services/auth.service';
+import { AuthService } from '../shared/services/auth.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { SearchPipe } from '../user/shared/pipes/search.pipe';
+import { SearchPipe } from '../shared/pipes/search.pipe';
 import { MatInputModule } from '@angular/material/input';
 import { AdminRoutingModule } from './admin-routing.module';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';

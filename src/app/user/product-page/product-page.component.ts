@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Product } from '../shared/interfaces/interfaces';
-import { ProductService } from '../shared/services/product.service';
+import { Product } from '../../shared/interfaces/interfaces';
+import { ProductService } from '../../shared/services/product.service';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
-import { NotifierService } from '../shared/services/notifier.service';
+import { NotifierService } from '../../shared/services/notifier.service';
 
 @Component({
   selector: 'app-product-page',

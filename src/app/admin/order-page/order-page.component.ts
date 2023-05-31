@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Order } from '../../user/shared/interfaces/interfaces';
+import { Order } from '../../shared/interfaces/interfaces';
 import { Subscription } from 'rxjs';
-import { OrderService } from '../../user/shared/services/order.service';
-import { CheckDialogComponent } from '../../user/shared/dialogs/check-dialog/check-dialog.component';
+import { OrderService } from '../../shared/services/order.service';
+import { CheckDialogComponent } from '../../shared/dialogs/check-dialog/check-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { OrderStatus } from '../../user/shared/enums/enums';
+import { OrderStatus } from '../../shared/enums/enums';
 
 @Component({
   selector: 'app-order-page',

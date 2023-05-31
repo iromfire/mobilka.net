@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { NotifierService } from '../shared/services/notifier.service';
-import { Product } from '../shared/interfaces/interfaces';
-import { ProductService } from '../shared/services/product.service';
+import { NotifierService } from '../../shared/services/notifier.service';
+import { Product } from '../../shared/interfaces/interfaces';
+import { ProductService } from '../../shared/services/product.service';
 
 @Component({
   selector: 'app-product',

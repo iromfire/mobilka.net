@@ -27,7 +27,7 @@ export interface Product {
 export interface Order {
   id?: string;
   orderNumber: string;
-  orders?: Product[];
+  products?: Product[];
   name: string;
   phone: string;
   address: string;

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../../environments/environment';
+import { environment } from '../../../environments/environment';
 import { map } from 'rxjs/operators';
 import {
   FbProductsResponse,
@@ -13,9 +13,6 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ProductService {
-  _totalPrice: BehaviorSubject<number> = new BehaviorSubject<number>(0);
-  totalPrice: Observable<number> = this._totalPrice.asObservable();
-
   private readonly _products: BehaviorSubject<Product[]> = new BehaviorSubject<
     Product[]
   >([]);
@@ -27,9 +24,20 @@ export class ProductService {
     false
   );
   public isLoaded: Observable<boolean> = this._isLoaded.asObservable();
-  cartItems: any[] = [];
+  cartItems: Product[] = [];
+  totalPrice: number = 0;
+  favouriteItems: Product[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    const itemsCart = localStorage.getItem('cartItems');
+    if (itemsCart) {
+      this.cartItems = JSON.parse(itemsCart);
+    }
+    const itemsFavourite = localStorage.getItem('favouriteItems');
+    if (itemsFavourite) {
+      this.favouriteItems = JSON.parse(itemsFavourite);
+    }
+  }
 
   create(product: Product) {
     return this.http
@@ -111,65 +119,79 @@ export class ProductService {
   }
 
   addToCart(product: Product): void {
-    this.cartItems.push(product);
-    localStorage.setItem('cartItems', JSON.stringify(this.cartItems));
-    product.isCart = true;
-    product.count!++;
-    const i = this._products.value.findIndex((p) => p.id === product.id);
-    if (i > -1) {
-      this.productsState[i] = product;
+    let item = this.cartItems.find((item) => item.id === product.id);
+    if (item) {
+      if (item.count! >= 10) {
+        return;
+      }
+      item.count!++;
+      localStorage.setItem('cartItems', JSON.stringify(this.cartItems));
+    } else {
+      this.cartItems.push({ ...product, count: 1 });
+      localStorage.setItem('cartItems', JSON.stringify(this.cartItems));
+    }
+  }
+
+  deleteFromCart(product: Product): void {
+    product.count = 0;
+    const index = this.cartItems.indexOf(product);
+    if (index > -1) {
+      this.cartItems.splice(index, 1);
+      localStorage.setItem('cartItems', JSON.stringify(this.cartItems));
+    }
+  }
+
+  getCartItems() {
+    return this.cartItems;
+  }
+
+  clearCart() {
+    this.cartItems = [];
+    localStorage.removeItem('cartItems');
+  }
+
+  incrementProduct(product: Product): void {
+    let item = this.cartItems.find((item) => item.id === product.id);
+    if (item) {
+      item.count!++;
+      localStorage.setItem('cartItems', JSON.stringify(this.cartItems));
+    }
+  }
+
+  decrementProduct(product: Product): void {
+    let item = this.cartItems.find((item) => item.id === product.id);
+    if (item && item.count! > 1) {
+      item.count!--;
+      localStorage.setItem('cartItems', JSON.stringify(this.cartItems));
+    } else if (item && item.count === 1) {
+      this.deleteFromCart(product);
     }
   }
 
   addToFavourite(product: Product): void {
     product.isFav = true;
-    const i = this.productsState.findIndex((p) => p.id === product.id);
-    if (i > -1) {
-      this.productsState[i] = product;
-    }
-  }
-
-  deleteFromCart(product: Product): void {
-    this._products.next(
-      this.productsState.map((p) => {
-        if (p.id === product.id) {
-          p.isCart = false;
-        }
-        return p;
-      })
-    );
+    this.favouriteItems.push(product);
+    localStorage.setItem('favouriteItems', JSON.stringify(this.favouriteItems));
   }
 
   deleteFromFavourite(product: Product): void {
-    this._products.next(
-      this.productsState.map((p) => {
-        if (p.id === product.id) {
-          p.isFav = false;
-        }
-        return p;
-      })
-    );
+    product.isFav = false;
+    const index = this.favouriteItems.indexOf(product);
+    if (index > -1) {
+      this.favouriteItems.splice(index, 1);
+      localStorage.setItem(
+        'favouriteItems',
+        JSON.stringify(this.favouriteItems)
+      );
+    }
   }
 
-  incrementProduct(product: Product): void {
-    this._products.next(
-      this.productsState.map((p) => {
-        if (p.id === product.id) {
-          p.count!++;
-        }
-        return p;
-      })
-    );
+  getFavouriteItems() {
+    return this.favouriteItems;
   }
 
-  decrementProduct(product: Product): void {
-    this._products.next(
-      this.productsState.map((p) => {
-        if (p.id === product.id) {
-          p.count!--;
-        }
-        return p;
-      })
-    );
+  clearFavourite() {
+    this.favouriteItems = [];
+    localStorage.removeItem('favouriteItems');
   }
 }

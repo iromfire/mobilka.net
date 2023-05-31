@@ -1,9 +1,16 @@
-<div *ngIf="(favouriteProducts | async)!.length > 0; else empty">
+<div *ngIf="favouriteItems.length > 0; else empty">
   <h2>Избранное</h2>
-  <!-- <button mat-flat-button class="btn btn-dark" (click)="deleteAllFromFavourite()" >Очистить избранное</button>-->
+  <button
+    mat-flat-button
+    color="primary"
+    (click)="clearFavourite()"
+    class="clear-cart"
+  >
+    Очистить избранное
+  </button>
   <div class="dashboard padding">
     <app-product
-      *ngFor="let product of (favouriteProducts | async)!"
+      *ngFor="let product of favouriteItems"
       [product]="product"
       class="box"
     ></app-product>

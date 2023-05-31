@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductService } from '../../user/shared/services/product.service';
-import { DeleteDialogComponent } from '../../user/shared/dialogs/delete-dialog/delete-dialog.component';
+import { ProductService } from '../../shared/services/product.service';
+import { DeleteDialogComponent } from '../../shared/dialogs/delete-dialog/delete-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({

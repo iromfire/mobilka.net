@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ProductService } from '../../user/shared/services/product.service';
-import { NotifierService } from '../../user/shared/services/notifier.service';
+import { ProductService } from '../../shared/services/product.service';
+import { NotifierService } from '../../shared/services/notifier.service';
 import { Router } from '@angular/router';
 
 @Component({

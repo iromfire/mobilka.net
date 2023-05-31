@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../../user/shared/services/auth.service';
+import { AuthService } from '../../shared/services/auth.service';
 import { Router } from '@angular/router';
-import { NotifierService } from '../../user/shared/services/notifier.service';
+import { NotifierService } from '../../shared/services/notifier.service';
 
 @Component({
   selector: 'app-login-page',

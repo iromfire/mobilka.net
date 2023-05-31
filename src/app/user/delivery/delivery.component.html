@@ -1,4 +1,4 @@
-<form [formGroup]="form" (ngSubmit)="submit()" *ngIf="totalPrice | async">
+<form [formGroup]="form" (ngSubmit)="submit()" *ngIf="totalPrice">
   <h2>Доставка</h2>
 
   <div class="form-control" [formGroup]="form">

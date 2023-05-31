@@ -1,31 +1,34 @@
-<div *ngIf="(cartProducts | async)!.length > 0; else empty" class="padding">
+<div *ngIf="cartItems.length > 0; else empty" class="padding">
   <h2>Ваша корзина</h2>
+  <button
+    mat-flat-button
+    color="primary"
+    (click)="clearCart()"
+    class="clear-cart"
+  >
+    Очистить корзину
+  </button>
   <div class="cart-main">
     <div class="cart-container">
       <div
-        *ngFor="let cartProduct of (cartProducts | async)!; let i = index"
+        *ngFor="let product of cartItems; let i = index"
         class="cart-product-container"
       >
         <div class="image-box">
-          <img
-            [src]="cartProduct.photo"
-            alt="phone image"
-            [routerLink]="['/product', cartProduct.id]"
-            class="cursor-pointer"
-          />
+          <img [src]="product.photo" alt="phone image" />
         </div>
 
         <div class="info-cont">
-          <h3>{{ cartProduct.title }}</h3>
-          <span>{{ cartProduct.info }}</span>
-          <div class="price">Цена: {{ cartProduct.price | currency }}</div>
-          <span>Количество: {{ cartProduct.count }}</span>
+          <h3>{{ product.title }}</h3>
+          <span>{{ product.info }}</span>
+          <div class="price">Цена: {{ product.price | currency }}</div>
+          <span>Количество: {{ product.count }}</span>
           <br />
           <div>
             <button
               mat-flat-button
               color="primary"
-              (click)="incrementProduct(cartProduct)"
+              (click)="incrementProduct(product)"
             >
               <div class="icon-center">
                 <mat-icon>+</mat-icon>
@@ -34,7 +37,7 @@
             <button
               mat-flat-button
               color="primary"
-              (click)="decrementProduct(cartProduct)"
+              (click)="decrementProduct(product)"
             >
               <div class="icon-center">
                 <mat-icon>–</mat-icon>
@@ -46,7 +49,7 @@
               class="delete"
               mat-flat-button
               color="warn"
-              (click)="deleteFromCart(cartProduct)"
+              (click)="deleteFromCart(product)"
             >
               Удалить
             </button>
@@ -55,7 +58,7 @@
       </div>
     </div>
     <div class="total">
-      <b>Итого: {{ totalPrice | async | currency }}</b>
+      <b>Итого: {{ totalPrice | currency }}</b>
       <button
         mat-flat-button
         color="primary"

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Order } from '../shared/interfaces/interfaces';
+import { Order } from '../../shared/interfaces/interfaces';
 import { Router } from '@angular/router';
 
 @Component({

@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Product } from '../shared/interfaces/interfaces';
-import { ProductService } from '../shared/services/product.service';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Product } from '../../shared/interfaces/interfaces';
+import { ProductService } from '../../shared/services/product.service';
 
 @Component({
   selector: 'app-favourite',
@@ -10,22 +8,15 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./favourite.component.scss'],
 })
 export class FavouriteComponent implements OnInit {
-  favouriteProducts: Observable<Product[]> = this.productServ.products.pipe(
-    map((products) => products.filter((p) => p.isFav))
-  );
-  constructor(private productServ: ProductService) {}
+  favouriteItems: Product[] = [];
+  constructor(private productServ: ProductService) {
+    this.favouriteItems = this.productServ.getFavouriteItems();
+  }
 
   ngOnInit(): void {}
 
-  /*  deleteAllFromFavourite(): void {
-    this.favouriteProducts.pipe(
-      map((value) => {
-        value.map((p) => {
-          if (p.isFav) {
-            p.isFav = false;
-          }
-        });
-      })
-    );
-  }*/
+  clearFavourite() {
+    this.productServ.clearFavourite();
+    this.favouriteItems = this.productServ.favouriteItems;
+  }
 }

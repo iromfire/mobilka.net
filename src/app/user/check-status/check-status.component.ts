@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
-import { NotifierService } from '../shared/services/notifier.service';
+import { NotifierService } from '../../shared/services/notifier.service';
 
 @Component({
   selector: 'app-check-status',
