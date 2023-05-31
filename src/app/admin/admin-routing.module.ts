@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminLayoutComponent } from './shared/admin-layout/admin-layout.component';
 import { LoginPageComponent } from './login-page/login-page.component';
-import { AuthService } from '../shared/services/auth.service';
+import { AuthService } from './auth.service';
 import { AddPageComponent } from './add-page/add-page.component';
 import { AuthGuard } from '../shared/guards/auth.guard';
 import { DashboardPageComponent } from './dashboard-page/dashboard-page.component';

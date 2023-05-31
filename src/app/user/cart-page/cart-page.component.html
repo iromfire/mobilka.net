@@ -21,7 +21,7 @@
         <div class="info-cont">
           <h3>{{ product.title }}</h3>
           <span>{{ product.info }}</span>
-          <div class="price">Цена: {{ product.price | currency }}</div>
+          <div class="price">Цена: {{ product.price }} ₽</div>
           <span>Количество: {{ product.count }}</span>
           <br />
           <div>
@@ -58,7 +58,7 @@
       </div>
     </div>
     <div class="total">
-      <b>Итого: {{ totalPrice | currency }}</b>
+      <b>Итого: {{ totalPrice }} ₽</b>
       <button
         mat-flat-button
         color="primary"

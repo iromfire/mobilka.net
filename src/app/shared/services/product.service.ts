@@ -163,15 +163,19 @@ export class ProductService {
     if (item && item.count! > 1) {
       item.count!--;
       localStorage.setItem('cartItems', JSON.stringify(this.cartItems));
-    } else if (item && item.count === 1) {
-      this.deleteFromCart(product);
     }
   }
 
   addToFavourite(product: Product): void {
-    product.isFav = true;
-    this.favouriteItems.push(product);
-    localStorage.setItem('favouriteItems', JSON.stringify(this.favouriteItems));
+    let item = this.favouriteItems.find((item) => item.id === product.id);
+    if (!item) {
+      product.isFav = true;
+      this.favouriteItems.push(product);
+      localStorage.setItem(
+        'favouriteItems',
+        JSON.stringify(this.favouriteItems)
+      );
+    }
   }
 
   deleteFromFavourite(product: Product): void {

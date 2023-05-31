@@ -28,13 +28,11 @@
         <td>{{ order.address }}</td>
         <td>+7 {{ order.phone | mask : "(000) 000-00-00" }}</td>
         <td>{{ order.name }}</td>
-        <td>
-          {{ order.price | currency }}
-        </td>
+        <td style="width: 100px">{{ order.price }} ₽</td>
         <td>
           {{ order.payment }}
         </td>
-        <td>
+        <td style="width: 200px">
           <select #statuses (change)="onSelected(statuses.value, order.id)">
             <option value="" disabled selected>{{ order.status }}</option>
             <option *ngFor="let status of orderStatuses" [ngValue]="status">

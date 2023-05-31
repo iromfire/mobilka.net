@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from '../../shared/interfaces/interfaces';
 import { ProductService } from '../../shared/services/product.service';
 import { switchMap } from 'rxjs/operators';
@@ -15,7 +15,8 @@ export class EditPageComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private productServ: ProductService,
-    private notifierService: NotifierService
+    private notifierService: NotifierService,
+    private router: Router
   ) {}
 
   formGroup!: FormGroup;
@@ -35,7 +36,7 @@ export class EditPageComponent implements OnInit {
       .subscribe((product) => {
         this.product = product;
         this.formGroup = new FormGroup({
-          title: new FormControl(this.product.title, Validators.required),
+          title: new FormControl(this.product.title!, Validators.required),
           photo: new FormControl(this.product.photo),
           info: new FormControl(this.product.info, Validators.required),
           price: new FormControl(this.product.price, Validators.required),
@@ -70,6 +71,7 @@ export class EditPageComponent implements OnInit {
       .subscribe(() => {
         this.submitted = false;
         this.notifierService.showNotification('Данные изменены', 'Ок');
+        this.router.navigate(['admin/dashboard']);
       });
   }
 }

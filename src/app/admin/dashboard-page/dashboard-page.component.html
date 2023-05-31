@@ -20,7 +20,7 @@
       <tr *ngFor="let product of (products | async)! | search : productName">
         <td>{{ product.id }}</td>
         <td>{{ product.title }}</td>
-        <td>{{ product.price | currency }}</td>
+        <td>{{ product.price }} ₽</td>
         <td>{{ product.date | date : "dd MMM yyyy HH:mm" }}</td>
         <td>
           <button

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../../shared/services/auth.service';
+import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import { NotifierService } from '../../shared/services/notifier.service';
 
@@ -56,7 +56,7 @@ export class LoginPageComponent implements OnInit {
     this.auth.login(user).subscribe(
       () => {
         this.form.reset();
-        this.router.navigate(['/admin', 'dashboard']).then();
+        this.router.navigate(['/admin', 'orders']).then();
         this.submitted = false;
       },
       (error) => {

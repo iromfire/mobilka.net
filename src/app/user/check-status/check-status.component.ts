@@ -11,10 +11,8 @@ import { NotifierService } from '../../shared/services/notifier.service';
 export class CheckStatusComponent implements OnInit {
   formGroup: FormGroup;
   checkSubmit: boolean = false;
-  errorExist = false;
   id: string = '';
   status!: any;
-  checkShown = false;
 
   constructor(
     private db: AngularFireDatabase,
@@ -28,18 +26,14 @@ export class CheckStatusComponent implements OnInit {
   ngOnInit(): void {}
 
   showNotification(): void {
-    if (!this.checkShown && this.errorExist) {
-      this.notifierService.showNotification(
-        'К сожалению ваш заказ не найден',
-        'OK'
-      );
-    }
-    this.checkShown = true;
+    this.notifierService.showNotification(
+      'К сожалению ваш заказ не найден',
+      'OK'
+    );
   }
 
   check(): void {
     this.checkSubmit = true;
-    this.checkShown = false;
     const orderNumber = this.formGroup.get('orderNumber')!.value;
     this.db
       .list('orders', (ref: any) =>
@@ -50,9 +44,9 @@ export class CheckStatusComponent implements OnInit {
         if (orders.length > 0) {
           const orderId = Object.keys(orders[0])[8];
           this.status = orders[0][orderId];
-          this.errorExist = false;
         } else {
-          this.errorExist = true;
+          this.showNotification();
+          this.status = '';
         }
       });
   }
