@@ -35,7 +35,6 @@ export class EditPageComponent implements OnInit {
       .subscribe((product) => {
         this.product = product;
         this.formGroup = new FormGroup({
-          type: new FormControl(this.product.type, Validators.required),
           title: new FormControl(this.product.title, Validators.required),
           photo: new FormControl(this.product.photo),
           info: new FormControl(this.product.info, Validators.required),
@@ -62,7 +61,6 @@ export class EditPageComponent implements OnInit {
     this.productServ
       .update({
         ...this.product,
-        type: this.formGroup.value.type,
         title: this.formGroup.value.title,
         photo: this.photo,
         info: this.formGroup.value.info,

@@ -48,7 +48,7 @@ export class CheckStatusComponent implements OnInit {
       .valueChanges()
       .subscribe((orders: any[]) => {
         if (orders.length > 0) {
-          const orderId = Object.keys(orders[0])[7];
+          const orderId = Object.keys(orders[0])[8];
           this.status = orders[0][orderId];
           this.errorExist = false;
         } else {

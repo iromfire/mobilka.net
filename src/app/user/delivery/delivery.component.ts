@@ -45,7 +45,6 @@ export class DeliveryComponent implements OnInit {
     const date = new Date();
     const dateNow =
       date.getDate().toString() +
-      '0' +
       (date.getMonth() + 1).toString() +
       date.getFullYear().toString();
     const randomInt = (min: number, max: number) =>
@@ -64,7 +63,7 @@ export class DeliveryComponent implements OnInit {
         orderNumber: this.generateUniqueId(),
         name: this.form.value.name,
         phone: this.form.value.phone,
-        address: this.form.value.adress,
+        address: this.form.value.address,
         orders: this.productServ.productsState.filter((p) => p.isCart),
         payment: this.form.value.payment,
         price,

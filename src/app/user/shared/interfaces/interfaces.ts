@@ -18,7 +18,6 @@ export interface Product {
   info: string;
   price: string;
   title: string;
-  type?: string;
   photo: string;
   count?: number;
   isFav?: boolean;
@@ -28,7 +27,7 @@ export interface Product {
 export interface Order {
   id?: string;
   orderNumber: string;
-  orders?: Array<Product>;
+  orders?: Product[];
   name: string;
   phone: string;
   address: string;

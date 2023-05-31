@@ -31,8 +31,8 @@
   </div>
 
   <div class="form-control" [formGroup]="form">
-    <label for="adress">Адрес</label>
-    <input id="adress" type="text" formControlName="address" />
+    <label for="address">Адрес</label>
+    <input id="address" type="text" formControlName="address" />
     <div
       *ngIf="form.get('address')!.touched && form.get('address')!.invalid"
       class="validation"
