@@ -1,13 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, Renderer2 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ProductService } from '../../shared/services/product.service';
 import { OrderService } from '../../shared/services/order.service';
 import { NotifierService } from '../../shared/services/notifier.service';
 import { Product } from '../../shared/interfaces/interfaces';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { OrderStatus } from '../../shared/enums/enums';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-delivery',
@@ -24,33 +23,40 @@ export class DeliveryComponent implements OnInit {
     private productServ: ProductService,
     private orderServ: OrderService,
     private notifierService: NotifierService,
-    private router: Router
+    private router: Router,
+    @Inject(DOCUMENT) private document: Document,
+    private renderer2: Renderer2
   ) {
     this.cartItems = this.productServ.getCartItems();
   }
 
   ngOnInit(): void {
+    const textScript = this.renderer2.createElement('script');
+    textScript.src = 'https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp';
+    this.renderer2.appendChild(this.document.body, textScript);
+
+    const srcScript = this.renderer2.createElement('script');
+    srcScript.type = 'text/javascript';
+    srcScript.text = `
+    ymaps.ready(init);
+    function init() {
+    var suggestView1 = new ymaps.SuggestView('address');
+    }
+    `;
+    this.renderer2.appendChild(this.document.body, srcScript);
+
     this.form = new FormGroup({
       name: new FormControl(null, Validators.required),
       phone: new FormControl(null, [
         Validators.required,
         Validators.minLength(10),
       ]),
-      address: new FormControl(null, Validators.required),
-      payment: new FormControl('Наличные'),
+      address: new FormControl(null, [
+        Validators.required,
+        Validators.minLength(10),
+      ]),
+      payment: new FormControl(null, Validators.required),
     });
-  }
-
-  generateUniqueId() {
-    const date = new Date();
-    const dateNow =
-      date.getDate().toString() +
-      (date.getMonth() + 1).toString() +
-      date.getFullYear().toString();
-    const randomInt = (min: number, max: number) =>
-      Math.floor(Math.random() * (max - min + 1)) + min;
-    const timeNow = date.getHours().toString() + date.getMinutes().toString();
-    return dateNow + '-' + timeNow + '-' + randomInt(100, 999);
   }
 
   submit(): void {
@@ -58,11 +64,14 @@ export class DeliveryComponent implements OnInit {
       return;
     }
     this.submitted = true;
+    const address = window.document.getElementById(
+      'address'
+    ) as any as HTMLInputElement;
     const order = {
-      orderNumber: this.generateUniqueId(),
+      orderNumber: this.orderServ.generateUniqueId(),
       name: this.form.value.name,
       phone: this.form.value.phone,
-      address: this.form.value.address,
+      address: address.value,
       products: this.cartItems,
       payment: this.form.value.payment,
       price: this.productServ.totalPrice,
@@ -70,8 +79,20 @@ export class DeliveryComponent implements OnInit {
       status: OrderStatus.inProcessing,
     };
     this.orderServ.create(order).subscribe(() => {
-      this.router.navigateByUrl('/delivery/order', { state: order }).then();
-      this.productServ.clearCart();
+      this.cartItems.forEach((product) => {
+        this.productServ
+          .updateQuantityStock({
+            ...product,
+            quantityStock: product.quantityStock! - product.count!,
+          })
+          .subscribe(() => {
+            this.router
+              .navigateByUrl('/delivery/order', { state: order })
+              .then(() => {
+                this.productServ.clearCart();
+              });
+          });
+      });
     });
   }
 }

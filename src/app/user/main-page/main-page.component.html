@@ -12,12 +12,12 @@
 
   <ng-template [ngIf]="isLoaded | async" [ngIfElse]="loading">
     <div class="dashboard">
-      <app-product
+      <div
         *ngFor="let product of (products | async)! | search : productName"
-        [product]="product"
         class="box"
       >
-      </app-product>
+        <app-product [product]="product"> </app-product>
+      </div>
     </div>
   </ng-template>
 </div>

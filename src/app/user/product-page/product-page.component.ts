@@ -25,8 +25,7 @@ export class ProductPageComponent implements OnInit {
       switchMap((params) => {
         return this.productServ.products.pipe(
           map(
-            (products) =>
-              products.find((product) => product.id === params['id'])!
+            (products) => products.find((product) => product.id === params.id)!
           )
         );
       })

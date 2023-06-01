@@ -64,6 +64,21 @@
     </div>
   </div>
 
+  <div class="form-control" [formGroup]="form">
+    <label for="quantityStock">Количество на складе</label>
+    <input id="quantityStock" type="number" formControlName="quantityStock" />
+    <div
+      *ngIf="
+        form.get('quantityStock')!.touched && form.get('quantityStock')?.invalid
+      "
+      class="validation"
+    >
+      <small *ngIf="form.get('quantityStock')!.errors!.required"
+        >Введите количество товара на складе</small
+      >
+    </div>
+  </div>
+
   <button
     mat-flat-button
     color="primary"

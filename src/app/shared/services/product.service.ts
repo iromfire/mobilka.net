@@ -118,6 +118,13 @@ export class ProductService {
     );
   }
 
+  updateQuantityStock(product: Product) {
+    return this.http.patch(
+      `${environment.fbDbUrl}/products/${product.id}.json`,
+      product
+    );
+  }
+
   addToCart(product: Product): void {
     let item = this.cartItems.find((item) => item.id === product.id);
     if (item) {

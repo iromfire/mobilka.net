@@ -51,4 +51,16 @@ export class OrderService {
       .patch(`${environment.fbDbUrl}/orders/${id}.json`, order)
       .subscribe(() => {});
   }
+
+  generateUniqueId() {
+    const date = new Date();
+    const dateNow =
+      date.getDate().toString() +
+      (date.getMonth() + 1).toString() +
+      date.getFullYear().toString();
+    const randomInt = (min: number, max: number) =>
+      Math.floor(Math.random() * (max - min + 1)) + min;
+    const timeNow = date.getHours().toString() + date.getMinutes().toString();
+    return dateNow + '-' + timeNow + '-' + randomInt(100, 999);
+  }
 }

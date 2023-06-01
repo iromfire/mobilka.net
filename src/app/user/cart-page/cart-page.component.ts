@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../shared/services/product.service';
 import { Product } from '../../shared/interfaces/interfaces';
-import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
 import { NotifierService } from '../../shared/services/notifier.service';
 
 @Component({
@@ -14,7 +12,7 @@ export class CartPageComponent implements OnInit {
   cartItems: Product[] = [];
   totalPrice!: number;
 
-  readonly MAX_COUNT = 10;
+  readonly MAX_COUNT = 5;
   readonly MIN_COUNT = 1;
 
   constructor(
@@ -42,6 +40,7 @@ export class CartPageComponent implements OnInit {
 
   deleteFromCart(product: Product): void {
     this.productServ.deleteFromCart(product);
+    this.getTotal();
     product.count = 0;
   }
 
@@ -51,9 +50,13 @@ export class CartPageComponent implements OnInit {
   }
 
   incrementProduct(product: Product): void {
+    if (product.count! === product.quantityStock) {
+      this.notifierService.showNotification('На складе больше нет', 'ОК');
+      return;
+    }
     if (product.count! === this.MAX_COUNT) {
       this.notifierService.showNotification(
-        'Максимальное количество достигнуто',
+        'Максимальное количество на одного клиента достигнуто',
         'ОК'
       );
       return;

@@ -22,6 +22,7 @@ export interface Product {
   count?: number;
   isFav?: boolean;
   isCart?: boolean;
+  quantityStock?: number;
 }
 
 export interface Order {

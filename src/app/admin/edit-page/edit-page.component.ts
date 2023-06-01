@@ -40,6 +40,10 @@ export class EditPageComponent implements OnInit {
           photo: new FormControl(this.product.photo),
           info: new FormControl(this.product.info, Validators.required),
           price: new FormControl(this.product.price, Validators.required),
+          quantityStock: new FormControl(
+            this.product.quantityStock,
+            Validators.required
+          ),
         });
       });
   }
@@ -67,6 +71,7 @@ export class EditPageComponent implements OnInit {
         info: this.formGroup.value.info,
         price: this.formGroup.value.price,
         date: new Date(),
+        quantityStock: this.formGroup.value.quantityStock,
       })
       .subscribe(() => {
         this.submitted = false;

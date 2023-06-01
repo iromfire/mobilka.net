@@ -5,6 +5,7 @@
     <div class="column-1">
       <p><b>Номер заказа:</b></p>
       <p>Дата заказа:</p>
+      <p>Адрес доставки:</p>
       <p>Имя получателя:</p>
       <p>Номер телефона:</p>
       <p>Способ оплаты:</p>
@@ -18,6 +19,7 @@
         <b>{{ order.orderNumber }}</b>
       </p>
       <p>{{ order.date | date }}</p>
+      <p>{{ order.address }}</p>
       <p>{{ order.name }}</p>
       <p>+7 {{ order.phone | mask : "(000) 000-00-00" }}</p>
       <p>{{ order.payment }}</p>

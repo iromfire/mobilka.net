@@ -28,6 +28,7 @@ export class AddPageComponent implements OnInit {
       photo: new FormControl(),
       info: new FormControl(null, Validators.required),
       price: new FormControl(null, Validators.required),
+      quantityStock: new FormControl(null, Validators.required),
     });
   }
 
@@ -52,10 +53,12 @@ export class AddPageComponent implements OnInit {
       info: this.form.value.info,
       price: this.form.value.price,
       date: new Date(),
+      quantityStock: 100,
     };
     this.productServ.create(product).subscribe(() => {
-      this.notifierService.showNotification('Товар успешно добавлен', 'Ок');
-      this.router.navigate(['admin/dashboard']);
+      this.router.navigate(['admin/dashboard']).then(() => {
+        this.notifierService.showNotification('Товар успешно добавлен', 'Ок');
+      });
     });
   }
 }
