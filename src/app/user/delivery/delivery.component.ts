@@ -17,7 +17,7 @@ export class DeliveryComponent implements OnInit {
   form!: FormGroup;
   submitted = false;
   totalPrice: number = this.productServ.totalPrice;
-  cartItems: Product[];
+  cartItems!: Product[];
 
   constructor(
     private productServ: ProductService,
@@ -26,37 +26,43 @@ export class DeliveryComponent implements OnInit {
     private router: Router,
     @Inject(DOCUMENT) private document: Document,
     private renderer2: Renderer2
-  ) {
-    this.cartItems = this.productServ.getCartItems();
-  }
+  ) {}
 
   ngOnInit(): void {
-    const textScript = this.renderer2.createElement('script');
-    textScript.src = 'https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp';
-    this.renderer2.appendChild(this.document.body, textScript);
-
-    const srcScript = this.renderer2.createElement('script');
-    srcScript.type = 'text/javascript';
-    srcScript.text = `
-    ymaps.ready(init);
-    function init() {
-    var suggestView1 = new ymaps.SuggestView('address');
-    }
-    `;
-    this.renderer2.appendChild(this.document.body, srcScript);
-
+    this.cartItems = this.productServ.getCartItems();
+    this.addMapApiToElement().onload = () => {
+      this.addMapInitToElement();
+    };
     this.form = new FormGroup({
       name: new FormControl(null, Validators.required),
+      email: new FormControl(null, [Validators.required, Validators.email]),
       phone: new FormControl(null, [
         Validators.required,
         Validators.minLength(10),
       ]),
-      address: new FormControl(null, [
-        Validators.required,
-        Validators.minLength(10),
-      ]),
+      address: new FormControl(null, [Validators.required]),
       payment: new FormControl(null, Validators.required),
     });
+  }
+
+  addMapApiToElement(): HTMLScriptElement {
+    const script = this.renderer2.createElement('script');
+    script.src =
+      'https://api-maps.yandex.ru/2.1/?apikey=d9372196-27a2-4ae5-a99b-d4cc91c95fd5&lang=ru_RU';
+    this.renderer2.appendChild(this.document.body, script);
+    return script;
+  }
+
+  addMapInitToElement(): void {
+    const initScript = this.renderer2.createElement('script');
+    initScript.type = 'text/javascript';
+    initScript.text = `
+      ymaps.ready(init);
+      function init() {
+      var suggestView1 = new ymaps.SuggestView('address');
+      }
+      `;
+    this.renderer2.appendChild(this.document.body, initScript);
   }
 
   submit(): void {
@@ -70,6 +76,7 @@ export class DeliveryComponent implements OnInit {
     const order = {
       orderNumber: this.orderServ.generateUniqueId(),
       name: this.form.value.name,
+      email: this.form.value.email,
       phone: this.form.value.phone,
       address: address.value,
       products: this.cartItems,
@@ -79,6 +86,7 @@ export class DeliveryComponent implements OnInit {
       status: OrderStatus.inProcessing,
     };
     this.orderServ.create(order).subscribe(() => {
+      // this.emailService.sendEmail(order.email, order.orderNumber);
       this.cartItems.forEach((product) => {
         this.productServ
           .updateQuantityStock({

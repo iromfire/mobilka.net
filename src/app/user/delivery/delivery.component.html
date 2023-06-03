@@ -13,6 +13,20 @@
   </div>
 
   <div class="form-control" [formGroup]="form">
+    <label for="email">Email (на него будет отправлен номер заказа)</label>
+    <input id="email" type="email" formControlName="email" />
+    <div
+      *ngIf="form.get('email')!.touched && form.get('email')!.invalid"
+      class="validation"
+    >
+      <small *ngIf="form.get('email')!.errors!.required">Введите Email</small>
+      <small *ngIf="form.get('email')!.errors!.email"
+        >Введите правильный Email</small
+      >
+    </div>
+  </div>
+
+  <div class="form-control" [formGroup]="form">
     <label for="phone">Номер телефона</label>
     <input
       id="phone"
