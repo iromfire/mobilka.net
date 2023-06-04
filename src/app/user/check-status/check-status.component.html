@@ -10,6 +10,7 @@
   <button (click)="check()" mat-flat-button color="primary">
     Узнать статус
   </button>
+
   <div *ngIf="checkSubmit">
     <div *ngIf="status">
       <h3>Статус вашего заказа: {{ status }}</h3>

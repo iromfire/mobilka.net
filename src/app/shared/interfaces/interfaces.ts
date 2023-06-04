@@ -30,6 +30,7 @@ export interface Order {
   orderNumber: string;
   products?: Product[];
   name: string;
+  email: string;
   phone: string;
   address: string;
   payment: string;

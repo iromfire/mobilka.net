@@ -4,6 +4,7 @@ import { FbOrdersResponse, FbResponse, Order } from '../interfaces/interfaces';
 import { environment } from '../../../environments/environment';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import emailjs from '@emailjs/browser';
 
 @Injectable({
   providedIn: 'root',
@@ -62,5 +63,29 @@ export class OrderService {
       Math.floor(Math.random() * (max - min + 1)) + min;
     const timeNow = date.getHours().toString() + date.getMinutes().toString();
     return dateNow + '-' + timeNow + '-' + randomInt(100, 999);
+  }
+
+  sendEmailOrderNumber(orderNumber: string, email: string, total: number) {
+    const templateParams = {
+      orderNumber: orderNumber,
+      email: email,
+      total: total,
+    };
+
+    emailjs
+      .send(
+        'service_8wn8czk',
+        'template_ucs0949',
+        templateParams,
+        'zuaJq-C8-C-Ui4fgj'
+      )
+      .then(
+        (response) => {
+          console.log('SUCCESS!', response.status, response.text);
+        },
+        (err) => {
+          console.log('FAILED...', err);
+        }
+      );
   }
 }

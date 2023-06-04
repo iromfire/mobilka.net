@@ -31,7 +31,6 @@ import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { firebaseConfig } from '../environments/environment';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
-import { AddressAutocompleteComponent } from './shared/address-input/address-autocomplete';
 
 registerLocaleData(localeRu, 'ru');
 
@@ -49,7 +48,6 @@ registerLocaleData(localeRu, 'ru');
     CheckDialogComponent,
     SuccessOrderComponent,
     CheckStatusComponent,
-    AddressAutocompleteComponent,
   ],
   imports: [
     BrowserModule,

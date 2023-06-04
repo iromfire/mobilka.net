@@ -7,6 +7,7 @@ import { Product } from '../../shared/interfaces/interfaces';
 import { Router } from '@angular/router';
 import { OrderStatus } from '../../shared/enums/enums';
 import { DOCUMENT } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-delivery',
@@ -15,7 +16,7 @@ import { DOCUMENT } from '@angular/common';
 })
 export class DeliveryComponent implements OnInit {
   form!: FormGroup;
-  submitted = false;
+  submitted: boolean = false;
   totalPrice: number = this.productServ.totalPrice;
   cartItems!: Product[];
 
@@ -24,6 +25,7 @@ export class DeliveryComponent implements OnInit {
     private orderServ: OrderService,
     private notifierService: NotifierService,
     private router: Router,
+    private http: HttpClient,
     @Inject(DOCUMENT) private document: Document,
     private renderer2: Renderer2
   ) {}
@@ -86,7 +88,11 @@ export class DeliveryComponent implements OnInit {
       status: OrderStatus.inProcessing,
     };
     this.orderServ.create(order).subscribe(() => {
-      // this.emailService.sendEmail(order.email, order.orderNumber);
+      this.orderServ.sendEmailOrderNumber(
+        order.orderNumber,
+        order.email,
+        order.price
+      );
       this.cartItems.forEach((product) => {
         this.productServ
           .updateQuantityStock({

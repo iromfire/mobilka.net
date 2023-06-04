@@ -9,6 +9,7 @@
         <th>Товары</th>
         <th>Адрес доставки</th>
         <th>Телефон</th>
+        <th>Email</th>
         <th>Имя</th>
         <th>Итого</th>
         <th>Оплата</th>
@@ -25,14 +26,15 @@
             {{ product.title }} ({{ product.count }}шт.)
           </div>
         </td>
-        <td>{{ order.address }}</td>
+        <td style="max-width: 200px">{{ order.address }}</td>
         <td>+7 {{ order.phone | mask : "(000) 000-00-00" }}</td>
+        <td>{{ order.email }}</td>
         <td>{{ order.name }}</td>
         <td style="width: 100px">{{ order.price }} ₽</td>
         <td>
           {{ order.payment }}
         </td>
-        <td style="width: 200px">
+        <td style="min-width: 150px">
           <select #statuses (change)="onSelected(statuses.value, order.id)">
             <option value="" disabled selected>{{ order.status }}</option>
             <option *ngFor="let status of orderStatuses" [ngValue]="status">
