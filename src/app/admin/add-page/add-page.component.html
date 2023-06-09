@@ -40,7 +40,12 @@
 
   <div class="form-control" [formGroup]="form">
     <label for="info">Информация</label>
-    <input id="info" type="text" formControlName="info" />
+    <ckeditor
+      id="info"
+      [editor]="Editor"
+      data=""
+      formControlName="info"
+    ></ckeditor>
     <div
       *ngIf="form.get('info')!.touched && form.get('info')?.invalid"
       class="validation"

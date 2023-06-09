@@ -3,8 +3,16 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from '../../shared/interfaces/interfaces';
 import { ProductService } from '../../shared/services/product.service';
 import { switchMap } from 'rxjs/operators';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { NotifierService } from '../../shared/services/notifier.service';
+
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-edit-page',
@@ -12,13 +20,7 @@ import { NotifierService } from '../../shared/services/notifier.service';
   styleUrls: ['./edit-page.component.scss'],
 })
 export class EditPageComponent implements OnInit {
-  constructor(
-    private route: ActivatedRoute,
-    private productServ: ProductService,
-    private notifierService: NotifierService,
-    private router: Router
-  ) {}
-
+  public Editor = ClassicEditor;
   formGroup!: FormGroup;
   product!: Product;
   photo!: string;
@@ -26,24 +28,42 @@ export class EditPageComponent implements OnInit {
   submitted = false;
   photoUploaded = false;
 
+  sub!: Subscription;
+
+  constructor(
+    private route: ActivatedRoute,
+    private productServ: ProductService,
+    private notifierService: NotifierService,
+    private router: Router,
+    private fb: FormBuilder
+  ) {
+    this.formGroup = new FormGroup({
+      title: new FormControl('', Validators.required),
+      photo: new FormControl(''),
+      info: new FormControl('', Validators.required),
+      price: new FormControl('', Validators.required),
+      quantityStock: new FormControl('', [
+        Validators.required,
+        Validators.min(0),
+      ]),
+    });
+  }
+
   ngOnInit(): void {
-    this.route.params
+    this.sub = this.route.params
       .pipe(
         switchMap((params) => {
           return this.productServ.getById(params['id']);
         })
       )
-      .subscribe((product) => {
+      .subscribe((product: Product) => {
         this.product = product;
-        this.formGroup = new FormGroup({
-          title: new FormControl(this.product.title!, Validators.required),
-          photo: new FormControl(this.product.photo),
-          info: new FormControl(this.product.info, Validators.required),
-          price: new FormControl(this.product.price, Validators.required),
-          quantityStock: new FormControl(
-            this.product.quantityStock,
-            Validators.required
-          ),
+        this.formGroup.setValue({
+          title: product.title,
+          photo: product.photo,
+          info: product.info,
+          price: product.price,
+          quantityStock: product.quantityStock,
         });
       });
   }
@@ -76,7 +96,9 @@ export class EditPageComponent implements OnInit {
       .subscribe(() => {
         this.submitted = false;
         this.notifierService.showNotification('Данные изменены', 'Ок');
-        this.router.navigate(['admin/dashboard']);
+        this.router
+          .navigate(['admin/dashboard'])
+          .then(() => this.sub.unsubscribe());
       });
   }
 }

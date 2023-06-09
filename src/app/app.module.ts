@@ -30,7 +30,7 @@ import { CheckStatusComponent } from './user/check-status/check-status.component
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { firebaseConfig } from '../environments/environment';
-import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 registerLocaleData(localeRu, 'ru');
 
@@ -66,7 +66,7 @@ registerLocaleData(localeRu, 'ru');
     MatIconModule,
     NgxMaskDirective,
     NgxMaskPipe,
-    TypeaheadModule.forRoot(),
+    CKEditorModule,
   ],
   providers: [
     {

@@ -15,12 +15,16 @@
         class="cart-product-container"
       >
         <div class="image-box">
-          <img [src]="product.photo" alt="phone image" />
+          <img
+            [src]="product.photo"
+            alt="phone image"
+            [routerLink]="['/product', product.id]"
+            class="cursor-pointer"
+          />
         </div>
 
         <div class="info-cont">
           <h3>{{ product.title }}</h3>
-          <span>{{ product.info }}</span>
           <div class="price">Цена: {{ product.price }} ₽</div>
           <span>Количество: {{ product.count }}</span>
           <br />

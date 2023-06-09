@@ -1,4 +1,4 @@
-<div *ngIf="product$ | async as product; else loading">
+<div *ngIf="product; else loading">
   <div class="product">
     <div class="flex">
       <div class="image-box">
@@ -9,12 +9,24 @@
           <b>{{ product.title }}</b>
         </h2>
         <h3>Информация:</h3>
-        <p>{{ product.info }}</p>
+        <p [innerHTML]="product.info"></p>
         <h3>Цена:</h3>
         <span>{{ product.price }} ₽</span>
         <div>
-          <button mat-flat-button color="primary" (click)="addToCart(product)">
+          <button
+            mat-flat-button
+            color="primary"
+            (click)="addToCart(product)"
+            style="margin-right: 0.5rem"
+          >
             В корзину
+          </button>
+          <button
+            mat-flat-button
+            color="primary"
+            (click)="addToFavourite(product)"
+          >
+            В избранное
           </button>
         </div>
       </div>

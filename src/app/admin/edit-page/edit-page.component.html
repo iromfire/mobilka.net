@@ -3,7 +3,7 @@
 
   <div class="form-control" [formGroup]="formGroup">
     <label for="title">Название</label>
-    <input id="title" formControlName="title" />
+    <input id="title" formControlName="title" type="text" />
     <div
       *ngIf="formGroup.get('title')?.touched && formGroup.get('title')?.invalid"
       class="validation"
@@ -43,7 +43,12 @@
 
   <div class="form-control" [formGroup]="formGroup">
     <label for="info">Информация</label>
-    <input id="info" formControlName="info" />
+    <ckeditor
+      id="info"
+      [editor]="Editor"
+      data=""
+      formControlName="info"
+    ></ckeditor>
     <div
       *ngIf="formGroup.get('info')?.touched && formGroup.get('info')?.invalid"
       class="validation"

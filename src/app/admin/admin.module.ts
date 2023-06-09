@@ -17,6 +17,8 @@ import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatOptionModule } from '@angular/material/core';
+import { EditorComponent } from '@tinymce/tinymce-angular';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 @NgModule({
   imports: [
@@ -32,6 +34,8 @@ import { MatOptionModule } from '@angular/material/core';
     MatOptionModule,
     NgxMaskDirective,
     NgxMaskPipe,
+    EditorComponent,
+    CKEditorModule,
   ],
   exports: [SearchPipe],
   declarations: [

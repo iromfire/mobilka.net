@@ -8,7 +8,7 @@ import { NotifierService } from '../../shared/services/notifier.service';
   templateUrl: './check-status.component.html',
   styleUrls: ['./check-status.component.scss'],
 })
-export class CheckStatusComponent implements OnInit {
+export class CheckStatusComponent {
   formGroup: FormGroup;
   checkSubmit: boolean = false;
   id: string = '';
@@ -22,8 +22,6 @@ export class CheckStatusComponent implements OnInit {
       orderNumber: new FormControl(''),
     });
   }
-
-  ngOnInit(): void {}
 
   showNotification(): void {
     this.notifierService.showNotification(

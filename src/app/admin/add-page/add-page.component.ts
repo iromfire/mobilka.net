@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ProductService } from '../../shared/services/product.service';
 import { NotifierService } from '../../shared/services/notifier.service';
 import { Router } from '@angular/router';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 @Component({
   selector: 'app-add-page',
@@ -10,6 +11,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./add-page.component.scss'],
 })
 export class AddPageComponent implements OnInit {
+  public Editor = ClassicEditor;
+
   form!: FormGroup;
   photo!: string;
 
@@ -28,7 +31,10 @@ export class AddPageComponent implements OnInit {
       photo: new FormControl(),
       info: new FormControl(null, Validators.required),
       price: new FormControl(null, Validators.required),
-      quantityStock: new FormControl(null, Validators.required),
+      quantityStock: new FormControl(null, [
+        Validators.required,
+        Validators.min(0),
+      ]),
     });
   }
 

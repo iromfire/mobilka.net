@@ -1,13 +1,10 @@
 <div class="padding">
   <div class="search-center" *ngIf="isLoaded | async">
-    <mat-form-field class="mat">
-      <input
-        matInput
-        type="text"
-        placeholder="Поиск товара..."
-        [(ngModel)]="productName"
-      />
-    </mat-form-field>
+    <input
+      type="text"
+      placeholder="Поиск товара..."
+      [(ngModel)]="productName"
+    />
   </div>
 
   <ng-template [ngIf]="isLoaded | async" [ngIfElse]="loading">

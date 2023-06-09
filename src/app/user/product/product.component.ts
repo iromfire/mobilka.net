@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NotifierService } from '../../shared/services/notifier.service';
 import { Product } from '../../shared/interfaces/interfaces';
 import { ProductService } from '../../shared/services/product.service';
@@ -8,15 +8,13 @@ import { ProductService } from '../../shared/services/product.service';
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.scss'],
 })
-export class ProductComponent implements OnInit {
+export class ProductComponent {
   @Input() product!: Product;
 
   constructor(
     private notifierService: NotifierService,
     private productServ: ProductService
   ) {}
-
-  ngOnInit(): void {}
 
   addToCart(product: Product): void {
     this.productServ.addToCart(product);
