@@ -1,15 +1,27 @@
 <div class="main">
   <nav class="navbar cursor-pointer">
-    <h2 routerLink="/">mobilka-net</h2>
+    <h2 routerLink="/">мобилка-нет</h2>
     <ul>
       <li routerLinkActive="active">
-        <a [routerLink]="['/favourite']">Избранное</a>
+        <img
+          style="width: 32px; height: 32px; margin-right: 1rem"
+          [routerLink]="['/favourite']"
+          src="./assets/images/favourite.png"
+        />
       </li>
       <li routerLinkActive="active">
-        <a [routerLink]="['/cart']">Корзина</a>
+        <img
+          style="width: 32px; height: 32px; margin-right: 1rem"
+          [routerLink]="['/cart']"
+          src="./assets/images/cart.png"
+        />
       </li>
       <li routerLinkActive="active">
-        <a [routerLink]="['/status']">Статус заказа</a>
+        <img
+          style="width: 32px; height: 32px; margin-top: 0.05rem"
+          [routerLink]="['/status']"
+          src="./assets/images/box.png"
+        />
       </li>
     </ul>
   </nav>
@@ -21,9 +33,6 @@
       <li><a href="https://t.me/iromfire">Telegram</a></li>
       <li><a href="mailto:green.neh@gmail.com">Email</a></li>
       <li><a href="https://github.com/iromfire">Github</a></li>
-      <li>
-        <p>📱</p>
-      </li>
     </ul>
   </footer>
 </div>

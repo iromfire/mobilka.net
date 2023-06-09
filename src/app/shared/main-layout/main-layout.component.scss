@@ -1,3 +1,7 @@
+h2 {
+  font-family: "Didact Gothic", sans-serif;
+}
+
 .main {
   min-height: 100%;
   display: flex;
@@ -43,22 +47,5 @@
   li:last-child {
     grid-column: 1 / 2;
     grid-row: 1 / 2;
-  }
-
-  li:hover ~ li p {
-    animation: wave-animation 0.3s infinite;
-  }
-
-  @keyframes wave-animation {
-    0%,
-    100% {
-      transform: rotate(0deg);
-    }
-    25% {
-      transform: rotate(20deg);
-    }
-    75% {
-      transform: rotate(-15deg);
-    }
   }
 }

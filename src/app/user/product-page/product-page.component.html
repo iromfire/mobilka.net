@@ -14,19 +14,15 @@
         <span>{{ product.price }} ₽</span>
         <div>
           <button
-            mat-flat-button
-            color="primary"
-            (click)="addToCart(product)"
             style="margin-right: 0.5rem"
-          >
-            В корзину
-          </button>
-          <button
             mat-flat-button
             color="primary"
             (click)="addToFavourite(product)"
           >
             В избранное
+          </button>
+          <button mat-flat-button color="primary" (click)="addToCart(product)">
+            В корзину
           </button>
         </div>
       </div>

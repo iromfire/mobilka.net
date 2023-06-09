@@ -1,5 +1,5 @@
 <div *ngIf="cartItems.length > 0; else empty" class="padding">
-  <h2>Ваша корзина</h2>
+  <h2 style="font-family: Inter, sans-serif">Ваша корзина</h2>
   <button
     mat-flat-button
     color="primary"
@@ -10,10 +10,7 @@
   </button>
   <div class="cart-main">
     <div class="cart-container">
-      <div
-        *ngFor="let product of cartItems; let i = index"
-        class="cart-product-container"
-      >
+      <div *ngFor="let product of cartItems" class="cart-product-container">
         <div class="image-box">
           <img
             [src]="product.photo"
@@ -25,31 +22,39 @@
 
         <div class="info-cont">
           <h3>{{ product.title }}</h3>
-          <div class="price">Цена: {{ product.price }} ₽</div>
-          <span>Количество: {{ product.count }}</span>
-          <br />
+          <p [innerHTML]="product.info"></p>
+          <div class="price">
+            <b>Цена: {{ product.price }} ₽</b>
+          </div>
+
           <div>
+            <span style="margin-right: 1rem"
+              >Количество: {{ product.count }}
+            </span>
             <button
+              style="background: whitesmoke; color: black"
               mat-flat-button
               color="primary"
               (click)="incrementProduct(product)"
             >
               <div class="icon-center">
-                <mat-icon>+</mat-icon>
+                <mat-icon>&#11014;</mat-icon>
               </div>
             </button>
             <button
+              style="background: whitesmoke; color: black"
               mat-flat-button
               color="primary"
               (click)="decrementProduct(product)"
             >
               <div class="icon-center">
-                <mat-icon>–</mat-icon>
+                <mat-icon>&#11015;</mat-icon>
               </div>
             </button>
           </div>
           <div>
             <button
+              style="margin-bottom: 1rem"
               class="delete"
               mat-flat-button
               color="warn"
