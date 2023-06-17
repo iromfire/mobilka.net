@@ -11,11 +11,7 @@ import { Product } from '../../shared/interfaces/interfaces';
 })
 export class MainPageComponent implements OnInit {
   productName!: string;
-
-  products = this.productServ.products.pipe(
-    map((products) => products.filter((p) => p.quantityStock! > 0))
-  );
-
+  products!: Observable<Product[]>;
   isLoaded: Observable<boolean> = this.productServ.isLoaded;
   favouriteItems: Product[] = [];
   constructor(private productServ: ProductService) {}
@@ -23,5 +19,8 @@ export class MainPageComponent implements OnInit {
   ngOnInit(): void {
     this.productServ.getAll();
     this.favouriteItems = this.productServ.getFavouriteItems();
+    this.products = this.productServ.products.pipe(
+      map((products) => products.filter((p) => p.quantityStock! > 0))
+    );
   }
 }

@@ -38,3 +38,9 @@ export interface Order {
   date: string | Date;
   status?: OrderStatus;
 }
+
+export interface User {
+  email: string;
+  password: string;
+  returnSecureToken: boolean;
+}

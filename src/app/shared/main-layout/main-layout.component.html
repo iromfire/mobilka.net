@@ -3,25 +3,13 @@
     <h2 routerLink="/">мобилка-нет</h2>
     <ul>
       <li routerLinkActive="active">
-        <img
-          style="width: 32px; height: 32px; margin-right: 1rem"
-          [routerLink]="['/favourite']"
-          src="./assets/images/favourite.png"
-        />
+        <a [routerLink]="['/favourite']">Избранное</a>
       </li>
       <li routerLinkActive="active">
-        <img
-          style="width: 32px; height: 32px; margin-right: 1rem"
-          [routerLink]="['/cart']"
-          src="./assets/images/cart.png"
-        />
+        <a [routerLink]="['/cart']">Корзина</a>
       </li>
       <li routerLinkActive="active">
-        <img
-          style="width: 32px; height: 32px; margin-top: 0.05rem"
-          [routerLink]="['/status']"
-          src="./assets/images/box.png"
-        />
+        <a [routerLink]="['/status']">Статус заказа</a>
       </li>
     </ul>
   </nav>
@@ -30,9 +18,9 @@
   </div>
   <footer class="footer">
     <ul>
-      <li><a href="https://t.me/iromfire">Telegram</a></li>
-      <li><a href="mailto:green.neh@gmail.com">Email</a></li>
-      <li><a href="https://github.com/iromfire">Github</a></li>
+      <li><a target="_blank" href="https://t.me/iromfire">Telegram</a></li>
+      <li><a target="_blank" href="mailto:green.neh@gmail.com">Email</a></li>
+      <li><a target="_blank" href="https://github.com/iromfire">Github</a></li>
     </ul>
   </footer>
 </div>

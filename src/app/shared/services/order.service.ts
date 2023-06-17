@@ -53,7 +53,7 @@ export class OrderService {
       .subscribe(() => {});
   }
 
-  generateUniqueId() {
+  generateUniqueId(): string {
     const date = new Date();
     const dateNow =
       date.getDate().toString() +

@@ -15,6 +15,7 @@ import { Observable } from 'rxjs';
 export class AuthService {
   constructor(private http: HttpClient) {}
 
+  //на самом деле используется
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
@@ -37,7 +38,7 @@ export class AuthService {
 
   private static setToken(response: any): void {
     if (response) {
-      const expData = new Date(
+      const expData: Date = new Date(
         new Date().getTime() + +response.expiresIn * 1000
       );
       localStorage.setItem('fb-token-exp', expData.toString());

@@ -2,8 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Product } from '../../shared/interfaces/interfaces';
 import { ProductService } from '../../shared/services/product.service';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, of, Subscription } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { NotifierService } from '../../shared/services/notifier.service';
 
 @Component({
@@ -12,7 +12,6 @@ import { NotifierService } from '../../shared/services/notifier.service';
   styleUrls: ['./product-page.component.scss'],
 })
 export class ProductPageComponent implements OnInit, OnDestroy {
-  // product$!: Observable<Product>;
   sub!: Subscription;
   product!: Product;
 

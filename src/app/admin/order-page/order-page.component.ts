@@ -18,15 +18,19 @@ export class OrderPageComponent implements OnInit, OnDestroy {
   orderStatuses = Object.values(OrderStatus);
 
   order!: Order;
-  orders: Array<Order> = [];
+  orders: Order[] = [];
+  ordersBackup: Order[] = [];
 
   selectedStatus!: OrderStatus | string;
+
+  productName!: string;
 
   constructor(private orderServ: OrderService, private dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.pSub = this.orderServ.getAll().subscribe((orders) => {
       this.orders = orders;
+      this.ordersBackup = [...this.orders];
     });
   }
 
@@ -37,6 +41,16 @@ export class OrderPageComponent implements OnInit, OnDestroy {
 
     if (this.rSub) {
       this.rSub.unsubscribe();
+    }
+  }
+
+  statusFilter(status: string): void {
+    if (status === 'Сбросить фильтрацию') {
+      this.orders = this.ordersBackup;
+    } else {
+      this.orders = this.ordersBackup.filter(
+        (order: Order): boolean => order.status === status
+      );
     }
   }
 

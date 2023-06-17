@@ -3,12 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from '../../shared/interfaces/interfaces';
 import { ProductService } from '../../shared/services/product.service';
 import { switchMap } from 'rxjs/operators';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NotifierService } from '../../shared/services/notifier.service';
 
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
@@ -34,8 +29,7 @@ export class EditPageComponent implements OnInit {
     private route: ActivatedRoute,
     private productServ: ProductService,
     private notifierService: NotifierService,
-    private router: Router,
-    private fb: FormBuilder
+    private router: Router
   ) {
     this.formGroup = new FormGroup({
       title: new FormControl('', Validators.required),

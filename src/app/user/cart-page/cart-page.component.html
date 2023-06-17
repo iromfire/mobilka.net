@@ -1,5 +1,5 @@
 <div *ngIf="cartItems.length > 0; else empty" class="padding">
-  <h2 style="font-family: Inter, sans-serif">Ваша корзина</h2>
+  <h2>Ваша корзина</h2>
   <button
     mat-flat-button
     color="primary"
@@ -37,7 +37,7 @@
               color="primary"
               (click)="incrementProduct(product)"
             >
-              <div class="icon-center">
+              <div>
                 <mat-icon>&#11014;</mat-icon>
               </div>
             </button>
@@ -47,7 +47,7 @@
               color="primary"
               (click)="decrementProduct(product)"
             >
-              <div class="icon-center">
+              <div>
                 <mat-icon>&#11015;</mat-icon>
               </div>
             </button>

@@ -1,7 +1,28 @@
-<div *ngIf="orders.length; else noOrders" class="order">
+<div>
   <h2>Таблица заказов</h2>
 
-  <table>
+  <div class="order-table-options">
+    <input
+      type="text"
+      placeholder="Найти..."
+      [(ngModel)]="productName"
+      style="margin-bottom: 1rem; width: 50%; margin-right: 0.5rem"
+    />
+
+    <select
+      #filter
+      style="margin-bottom: 1rem; width: 50%; margin-left: 0.5rem"
+      (change)="statusFilter(filter.value)"
+    >
+      <option value="" disabled selected>Фильтрация по статусу</option>
+      <option value="Сбросить фильтрацию">Сбросить фильтрацию</option>
+      <option *ngFor="let status of orderStatuses" [ngValue]="status">
+        {{ status }}
+      </option>
+    </select>
+  </div>
+
+  <table *ngIf="orders.length; else noOrders" class="order">
     <thead>
       <tr>
         <th>Номер заказа</th>
@@ -18,7 +39,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let order of orders">
+      <tr *ngFor="let order of orders | searchOrder : productName">
         <td>{{ order.orderNumber }}</td>
         <td>{{ order.date | date : "dd MMM yyyy HH:mm" }}</td>
         <td>

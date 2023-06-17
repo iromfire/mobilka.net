@@ -19,6 +19,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatOptionModule } from '@angular/material/core';
 import { EditorComponent } from '@tinymce/tinymce-angular';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { SearchOrderPipe } from '../shared/pipes/searchOrder.pipe';
 
 @NgModule({
   imports: [
@@ -46,6 +47,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     EditPageComponent,
     OrderPageComponent,
     SearchPipe,
+    SearchOrderPipe,
   ],
   providers: [AuthService, [provideNgxMask()]],
 })
